@@ -1,9 +1,24 @@
 <template>
   <h3>{{ title }}</h3>
-  <div v-if="showModal">
-    <Modal :header="header" :text="text" theme="sale" @close="toggleModal" />
+  <teleport to=".modals" v-if="showModal">
+    <Modal theme="" @close="toggleModal">
+      <template v-slot:links>
+        <a href="#">sign up now</a>
+        <a href="#">more info</a>
+      </template>
+      <h1>{{ header }}</h1>
+      <p>{{ text }}</p>
+    </Modal>
+  </teleport>
+  <div v-if="showModalTwo">
+    <Modal @close="toggleModalTwo">
+      <template v-slot:para>
+        <p>Lorem ipsum dolor sit amet.</p>
+      </template>
+    </Modal>
   </div>
   <button @click="toggleModal">Open modal(alt)</button>
+  <button @click="toggleModalTwo">Open modaltwo</button>
 </template>
 
 <script>
@@ -16,14 +31,18 @@ export default {
   data() {
     return {
       title: 'Vue app',
-      header: 'sign up for the givaway',
+      header: 'Ninja givaway',
       text: 'grab your price',
       showModal: false,
+      showModalTwo: false,
     };
   },
   methods: {
     toggleModal() {
       this.showModal = !this.showModal;
+    },
+    toggleModalTwo() {
+      this.showModalTwo = !this.showModalTwo;
     },
   },
 };
